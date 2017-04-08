@@ -47,8 +47,8 @@ Vagrant.configure(2) do |config|
         file.source     = 'tower/inventory'
         file.destination    = '/home/vagrant/ansible-tower-setup-bundle-3.1.2-1.el7/inventory'
        end   
-    config.vm.provision :shell, path: "ansible-tower-install.sh"
-    config.vm.provision :shell, path: "bootstrap-node.sh"
+    master.vm.provision :shell, path: "ansible-tower-install.sh"
+    master.vm.provision :shell, path: "bootstrap-node.sh"
   end
   
   config.vm.provider "virtualbox" do |vb|
