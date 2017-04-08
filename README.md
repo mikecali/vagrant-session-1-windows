@@ -21,6 +21,7 @@ Internet connection is a must!
 ## Scripts included to this repository are the following:
 - bootstrap-node.sh - this file enables Centos repository (of my choice: EPEL and ELREPO). Add /etc/hosts file entry
 - ansible-install.sh - this file install ansible core to the target ansible-host vm. Creates folder for playbooks. If you need to add packages you can manipulate this file for your own purpose.
+- ansible-tower-install.sh - this file install ansible-tower during VM build.
 
 ## Playbooks files:
 - ping.yml - a sample playbook to check if all vms are reachable from Ansible-host
