@@ -1,63 +1,101 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-Vagrant.configure(2) do |config|
 
-  config.vm.define "client1" do |aso|
-    aso.vm.box = "pmsmith/windows2008"
-    aso.vm.guest = :windows
-    aso.vm.network "private_network", ip: "192.168.100.10"
-    aso.vm.hostname = "win-client1"
-    aso.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
-    aso.winrm.retry_limit = 20
-    aso.winrm.retry_delay = 10
-    aso.vm.communicator = "winrm"
-    aso.winrm.username = "vagrant"
-    aso.winrm.password = "vagrant"
-    aso.vm.customize ["modifyvm", :id, "--name", "win-client1"]
-  end
- 
-  config.vm.define "client2" do |tao|
-    tao.vm.box = "pmsmith/windows2008"
-    tao.vm.guest = :windows
-    tao.vm.network "private_network", ip: "192.168.100.11"
-    tao.vm.host_name = "win-client2"
-    tao.vm.network :forwarded_port, guest: 5985, host: 5986, id: "winrm", auto_correct: true
-    tao.vm.communicator = "winrm"
-    tao.winrm.username = "vagrant"
-    tao.winrm.password = "vagrant"
-    tao.winrm.retry_limit = 20
-    tao.winrm.retry_delay = 10
-    tao.vm.customize ["modifyvm", :id, "--name", "win-client2"]
-  end
- 
-  config.vm.define "ansible-host" do |master|
+Vagrant.configure("2") do |config|
+# Define VMs with static private IP addresses, vcpu, memory and vagrant-box.
+  boxes = [
+    { 
+      :name => "client1", 
+      :box => "pmsmith/windows2008",
+      :ram => 2048,
+      :vcpu => 1,
+      :ip => "192.168.29.2" 
+    },
+    { 
+      :name => "client2",
+      :box => "pmsmith/windows2008", 
+      :ram => 2048,
+      :vcpu => 1,
+      :ip => "192.168.29.3" 
+    },
+    { 
+      :name => "ansible-host",
+      :box => "Datacom_Centos7.3_gui_v3",
+      :ram => 4048,
+      :vcpu => 1,
+      :ip => "192.168.29.4" 
+    }
+  ]
+
+  # Provision each of the VMs.
+  boxes.each do |opts|
+    config.vm.define opts[:name] do |config|
 #   Only Enable this if you are connecting to Proxy server
-#      config.proxy.http     = "http://usernam:password@dnzwgpx2.datacom.co.nz:80"
-#      config.proxy.https    = "http://usernam:password@dnzwgpx2.datacom.co.nz:80"
-#    master.vm.guest = :linux    
-    master.proxy.no_proxy = "localhost,127.0.0.1"
-    master.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
-    master.ssh.insert_key = false
-    master.vm.hostname = "ansible-host"
-    master.vm.communicator = "ssh"
-    master.vm.box = "Datacom_Centos7.3_gui_v3"
-    master.vm.network "private_network", ip: "192.168.100.12"
-    master.vm.host_name = "ansible-host"
-    master.vm.provision :shell, path: "ansible-install.sh"
-    master.vm.provision :shell, path: "host.sh"
-    master.vm.provision :file do |file|
+#      config.proxy.http     = "http://michaelcal:11Ihave2Hands11@dnzwgpx2.datacom.co.nz:80"
+#      config.proxy.https    = "http://michaelcal:11Ihave2Hands11@dnzwgpx2.datacom.co.nz:80"
+      config.proxy.no_proxy = "localhost,127.0.0.1"
+      config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+      config.ssh.insert_key = false
+      config.vm.box = opts[:box]
+      config.vm.hostname = opts[:name]
+      config.vm.provider :virtualbox do |v|
+        v.memory = opts[:ram]
+        v.cpus = opts[:vcpu]
+      end
+      config.vm.network :private_network, ip: opts[:ip]
+        
+      # Provision Windows VM.
+      if opts[:name] == "client1"
+      config.vm.define opts[:name] do |vb|
+        vb.vm.guest = :windows
+        vb.vm.name = "client1"
+#        vb.vm.network "private_network", ip: "192.168.100.10"
+        vb.vm.hostname = "win-client1"
+        vb.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+        vb.winrm.retry_limit = 20
+        vb.winrm.retry_delay = 10
+        vb.vm.communicator = "winrm"
+        vb.winrm.username = "vagrant"
+        vb.winrm.password = "vagrant"
+        end
+      config.vm.provider "virtualbox" do |vb|
+        vb.name = "client1"
+        end
+      end
+      
+      if opts[:name] == "client2"
+      config.vm.define opts[:name] do |vb|
+        vb.vm.guest = :windows
+        vb.vm.name = "client2"
+#        vb.vm.network "private_network", ip: "192.168.100.10"
+        vb.vm.hostname = "win-client1"
+        vb.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+        vb.winrm.retry_limit = 20
+        vb.winrm.retry_delay = 10
+        vb.vm.communicator = "winrm"
+        vb.winrm.username = "vagrant"
+        vb.winrm.password = "vagrant"
+        end
+      config.vm.provider "virtualbox" do |vb|
+        vb.name = "client1"
+        end
+      end
+            
+      if opts[:name] == "ansible-host"
+        config.vm.provision :shell, path: "ansible-install.sh"
+        config.vm.provision :shell, path: "host.sh"
+      end
+      if opts[:name] == "ansible-host"
+        config.vm.provision :file do |file|
         file.source     = 'tower/inventory'
         file.destination    = '/home/vagrant/ansible-tower-setup-bundle-3.1.2-1.el7/inventory'
-       end   
-    master.vm.provision :shell, path: "ansible-tower-install.sh"
-    master.vm.provision :shell, path: "bootstrap-node.sh"
-  end
-  
-  config.vm.provider "virtualbox" do |vb|
-    # Display the VirtualBox GUI when booting the machine
-    # vb.gui = true
-    # Customize the amount of memory on the VM:
-    vb.cpus = 2
-    vb.memory = 2048
+        end
+      end
+      if opts[:name] == "ansible-host"
+        config.vm.provision :shell, path: "ansible-tower-install.sh"
+      end
+    config.vm.provision :shell, path: "bootstrap-node.sh"
+   end    
   end
 end
+
