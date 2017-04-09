@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
         vb.winrm.password = "vagrant"
         end
       config.vm.provider "virtualbox" do |vb|
-        vb.name = "client1"
+        vb.name = "client2"
         end
       end
             
