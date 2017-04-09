@@ -12,9 +12,10 @@ This Vagrantfile will create 3 Centos VM's to simulate Ansible control machine a
 
 Internet connection is a must!
 
-* Vagrant - 1.8.x
- * Vagrant plugins - vagrant-proxyconf - needed if you are running behind proxy
-
+* Vagrant - latest
+ * Vagrant plugins 
+    - vagrant-proxyconf - needed if you are running behind proxy
+    - vagrant-winrm
 * Ansible: latest
 * Virtualbox: latest
 
@@ -25,13 +26,13 @@ Internet connection is a must!
 
 ## Playbooks files:
 - ping.yml - a sample playbook to check if all vms are reachable from Ansible-host
-- apache.yml - a sample playbook that will install apache and configure firewalld to allow port 80 traffic
-- mysql.yml - a sample playbook that will install mysql and configure firewalld to allow port 3306 traffic
-- verify-install.yml - a sample playbook to verify if apache and mysql are installed
+- create-user.yml- a sample playbook that will create user account on windows server
+- test.yml - a sample playbook that will test ansible connectivity to windows server using winrm
 
 ## Other files included:
 - ansible.cfg
-- inventory
+- inventory for tower install
+- inventory for testing playbooks
 
 ## Connecting the dots:
 Before you run vagrant up, make sure that you updated the Vagrantfile to your desired configuration. Specifically use the box that are available from https://atlas.hashicorp.com/boxes/. The entry on the current vagrant file are Datacom specific boxes and is not available from atlas.
