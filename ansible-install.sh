@@ -9,7 +9,7 @@ mkdir /home/vagrant/playbooks.windows
 chown vagrant:vagrant /home/vagrant/playbooks.windows
 
 ls -la /home/vagrant/ansible-tower-setup-bundle-latest.el7.tar.gz
-if [ $? -eq 0 ];
+if [ $? -eq 2 ];
 then
 wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-latest.el7.tar.gz
 else

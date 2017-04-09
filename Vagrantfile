@@ -31,8 +31,8 @@ Vagrant.configure("2") do |config|
   boxes.each do |opts|
     config.vm.define opts[:name] do |config|
 #   Only Enable this if you are connecting to Proxy server
-      config.proxy.http     = "http://172.17.172.72:3128"
-      config.proxy.https    = "http://172.17.172.72:3128"
+      config.proxy.http     = "http://michaelcal:11Ihave2Hands11@dnzwgpx2.datacom.co.nz:80"
+      config.proxy.https    = "http://michaelcal:11Ihave2Hands11@dnzwgpx2.datacom.co.nz:80"
       config.proxy.no_proxy = "localhost,127.0.0.1"
       config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
       config.ssh.insert_key = false
@@ -46,6 +46,8 @@ Vagrant.configure("2") do |config|
         
       # Provision Windows VM.
       if opts[:name] == "client1"
+# solution to: https://github.com/mitchellh/vagrant/issues/6273
+      config.proxy.no_proxy = "localhost,127.0.0.1"  
       config.vm.define opts[:name] do |vb|
         vb.vm.guest = :windows
         vb.vm.name = "client1"
@@ -64,6 +66,8 @@ Vagrant.configure("2") do |config|
       end
       
       if opts[:name] == "client2"
+# solution to: https://github.com/mitchellh/vagrant/issues/6273
+      config.proxy.no_proxy = "localhost,127.0.0.1"  
       config.vm.define opts[:name] do |vb|
         vb.vm.guest = :windows
         vb.vm.name = "client2"
