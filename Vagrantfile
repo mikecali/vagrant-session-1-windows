@@ -2,30 +2,32 @@
 # vi: set ft=ruby :
 Vagrant.configure(2) do |config|
 
-  config.vm.define "client1" do |dev|
-    dev.vm.box = "pmsmith/windows2008"
-    dev.vm.guest = :windows
-    dev.vm.network "private_network", ip: "192.168.100.10"
-    dev.vm.hostname = "win-client1"
-    dev.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
-    dev.winrm.retry_limit = 20
-    dev.winrm.retry_delay = 10
-    dev.vm.communicator = "winrm"
-    dev.winrm.username = "vagrant"
-    dev.winrm.password = "vagrant"
+  config.vm.define "client1" do |aso|
+    aso.vm.box = "pmsmith/windows2008"
+    aso.vm.guest = :windows
+    aso.vm.network "private_network", ip: "192.168.100.10"
+    aso.vm.hostname = "win-client1"
+    aso.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    aso.winrm.retry_limit = 20
+    aso.winrm.retry_delay = 10
+    aso.vm.communicator = "winrm"
+    aso.winrm.username = "vagrant"
+    aso.winrm.password = "vagrant"
+    aso.vm.customize ["modifyvm", :id, "--name", "win-client1"]
   end
  
-  config.vm.define "client2" do |fat|
-    fat.vm.box = "pmsmith/windows2008"
-    fat.vm.guest = :windows
-    fat.vm.network "private_network", ip: "192.168.100.11"
-    fat.vm.host_name = "win-client2"
-    fat.vm.network :forwarded_port, guest: 5985, host: 5986, id: "winrm", auto_correct: true
-    fat.vm.communicator = "winrm"
-    fat.winrm.username = "vagrant"
-    fat.winrm.password = "vagrant"
-    fat.winrm.retry_limit = 20
-    fat.winrm.retry_delay = 10
+  config.vm.define "client2" do |tao|
+    tao.vm.box = "pmsmith/windows2008"
+    tao.vm.guest = :windows
+    tao.vm.network "private_network", ip: "192.168.100.11"
+    tao.vm.host_name = "win-client2"
+    tao.vm.network :forwarded_port, guest: 5985, host: 5986, id: "winrm", auto_correct: true
+    tao.vm.communicator = "winrm"
+    tao.winrm.username = "vagrant"
+    tao.winrm.password = "vagrant"
+    tao.winrm.retry_limit = 20
+    tao.winrm.retry_delay = 10
+    tao.vm.customize ["modifyvm", :id, "--name", "win-client2"]
   end
  
   config.vm.define "ansible-host" do |master|
