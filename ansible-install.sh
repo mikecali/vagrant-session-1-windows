@@ -5,17 +5,8 @@ sudo yum install telnet -y
 sudo yum install python-winrm
 sudo yum install git -y
 wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-latest.el7.tar.gz
-mkdir /home/vagrant/playbooks
-chown vagrant:vagrant /home/vagrant/playbooks
-mkdir /home/vagrant/playbooks/keys
-chown vagrant:vagrant /home/vagrant/playbooks/keys
-chmod 755 /home/vagrant/playbooks/keys
-ls -la /home/vagrant/playbooks/keys/vagrant
-if [ $? -eq 0 ]; then
-sudo chmod -R 644 /home/vagrant/playbooks/keys/vagrant
-else
-echo "initial provisioning.. no vagrant key loaded yet"
-fi
+mkdir /home/vagrant/playbooks.windows
+chown vagrant:vagrant /home/vagrant/playbooks.windows
 
 ls -la /home/vagrant/ansible-tower-setup-bundle-latest.el7.tar.gz
 if [ $? -eq 0 ];

@@ -92,6 +92,18 @@ Vagrant.configure("2") do |config|
         end
       end
       if opts[:name] == "ansible-host"
+        config.vm.provision :file do |file|
+		file.source     = 'windows.playbooks/create-user.yml'
+	file.destination    = '/home/vagrant/windows.playbooks/create-user.yml'
+        end
+      end
+      if opts[:name] == "ansible-host"
+        config.vm.provision :file do |file|
+	file.source     = 'windows.playbooks/install-msi.yml'
+	file.destination    = '/home/vagrant/windows.playbooks/install-msi.yml'
+        end
+      end 
+      if opts[:name] == "ansible-host"
         config.vm.provision :shell, path: "ansible-tower-install.sh"
       end
     config.vm.provision :shell, path: "bootstrap-node.sh"
