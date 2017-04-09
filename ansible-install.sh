@@ -4,7 +4,7 @@ sudo yum install ansible -y
 sudo yum install telnet -y
 sudo yum install python-winrm -y
 sudo yum install git -y
-wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-latest.el7.tar.gz
+#wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-latest.el7.tar.gz
 mkdir /home/vagrant/playbooks.windows
 chown vagrant:vagrant /home/vagrant/playbooks.windows
 
