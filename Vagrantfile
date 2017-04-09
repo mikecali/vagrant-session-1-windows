@@ -3,8 +3,8 @@
 Vagrant.configure(2) do |config|
 
   config.vm.define "client1" do |dev|
-  	dev.vm.box = "ferventcoder/win2008r2-x64-nocm"
-  	dev.vm.guest = :windows
+    dev.vm.box = "pmsmith/windows2008"
+    dev.vm.guest = :windows
     dev.vm.network "private_network", ip: "192.168.100.10"
     dev.vm.hostname = "win-client1"
     dev.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   end
  
   config.vm.define "client2" do |fat|
-    fat.vm.box = "ferventcoder/win2008r2-x64-nocm"
+    fat.vm.box = "pmsmith/windows2008"
     fat.vm.guest = :windows
     fat.vm.network "private_network", ip: "192.168.100.11"
     fat.vm.host_name = "win-client2"

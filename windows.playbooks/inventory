@@ -1,12 +1,14 @@
 [windows]
-192.168.29.3
-192.168.29.2
+192.168.100.11
+192.168.100.10
 
-[all:vars]
-ansible_python_interpreter=/usr/bin/python2
+[windows:vars]
+#ansible_python_interpreter=/usr/bin/python2
 ansible_ssh_pass=vagrant
 ansible_ssh_user=vagrant
-ansible_ssh_port=5986
+ansible_ssh_port=5985
+#not 5986, as we would use for non-virtualized environments
 ansible_connection=winrm
+#ansible_winrm_scheme=http
 ansible_winrm_server_cert_validation=ignore
-
+~                                          
