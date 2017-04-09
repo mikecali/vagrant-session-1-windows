@@ -27,7 +27,7 @@ Internet connection is a must!
 ## Playbooks files:
 - ping.yml - a sample playbook to check if all vms are reachable from Ansible-host
 - create-user.yml- a sample playbook that will create user account on windows server
-- test.yml - a sample playbook that will test ansible connectivity to windows server using winrm
+- test.yml - a sample playbook that will test ansible connectivity and display network config of windows server using winrm
 
 ## Other files included:
 - ansible.cfg
