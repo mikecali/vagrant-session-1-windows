@@ -2,7 +2,7 @@ rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch
 sudo yum repolist
 sudo yum install ansible -y 
 sudo yum install telnet -y
-sudo yum install python-winrm
+sudo yum install python-winrm -y
 sudo yum install git -y
 wget https://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-latest.el7.tar.gz
 mkdir /home/vagrant/playbooks.windows

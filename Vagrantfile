@@ -93,14 +93,20 @@ Vagrant.configure("2") do |config|
       end
       if opts[:name] == "ansible-host"
         config.vm.provision :file do |file|
-		file.source     = 'windows.playbooks/create-user.yml'
-	file.destination    = '/home/vagrant/windows.playbooks/create-user.yml'
+		    file.source     = 'windows.playbooks/create-user.yml'
+	      file.destination    = '/home/vagrant/windows.playbooks/create-user.yml'
+        end
+      end
+       if opts[:name] == "ansible-host"
+        config.vm.provision :file do |file|
+        file.source     = 'windows.playbooks/inventory'
+        file.destination    = '/home/vagrant/inventory'
         end
       end
       if opts[:name] == "ansible-host"
         config.vm.provision :file do |file|
-	file.source     = 'windows.playbooks/install-msi.yml'
-	file.destination    = '/home/vagrant/windows.playbooks/install-msi.yml'
+	      file.source     = 'windows.playbooks/install-msi.yml'
+	      file.destination    = '/home/vagrant/windows.playbooks/install-msi.yml'
         end
       end 
       if opts[:name] == "ansible-host"

@@ -11,4 +11,4 @@ ansible_ssh_port=5985
 ansible_connection=winrm
 #ansible_winrm_scheme=http
 ansible_winrm_server_cert_validation=ignore
-~                                          
+                                 
