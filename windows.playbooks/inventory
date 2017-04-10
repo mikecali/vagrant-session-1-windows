@@ -7,8 +7,6 @@
 ansible_ssh_pass=vagrant
 ansible_ssh_user=vagrant
 ansible_ssh_port=5985
-#not 5986, as we would use for non-virtualized environments
 ansible_connection=winrm
-#ansible_winrm_scheme=http
 ansible_winrm_server_cert_validation=ignore
                                  
