@@ -109,6 +109,12 @@ Vagrant.configure("2") do |config|
       end
       if opts[:name] == "ansible-host"
         config.vm.provision :file do |file|
+	file.source     = 'windows.playbooks/enable-iis.yml'
+	file.destination    = '/home/vagrant/windows.playbooks/enable-iis.yml'
+        end
+      end
+      if opts[:name] == "ansible-host"
+        config.vm.provision :file do |file|
 	      file.source     = 'windows.playbooks/test.yml'
 	      file.destination    = '/home/vagrant/windows.playbooks/test.yml'
         end
